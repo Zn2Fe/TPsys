@@ -15,7 +15,7 @@
 const uint32_t MAP_SIZE_GPIO = 64*1024; // 0x400_0000
 enum {GPIO_TRISTATE = 1}; // Offsets are in 32-bit words!
 
-#define BASE_MAP_PWM  0x41200000
+#define BASE_MAP_PWM  0x43c00000
 #define PWM1_OFFSET 0
 #define PWM2_OFFSET 0x10000
 const uint32_t MAP_SIZE_PWM = 2*64*1024; // 0x400_0000
