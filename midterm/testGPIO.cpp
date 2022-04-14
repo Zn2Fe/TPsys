@@ -20,7 +20,7 @@ int main()
   uint32_t count = 0;
   
 
-  volatile uint8_t * ACCEL = NULL;
+  volatile uint32_t * ACCEL = NULL;
 
   printf("\n\nThis program requires that the GPIO buttons and LEDs bitstream is loaded in the FPGA.\n");
   printf("This program has to be run with sudo.\n");
@@ -28,7 +28,7 @@ int main()
   getchar();
 
   // Obtain a pointer to access the peripherals in the address map.
-	ACCEL = (uint8_t*) MapMemIO(BASE_MAP, MAP_SIZE);
+	ACCEL =  MapMemIO(BASE_MAP, MAP_SIZE);
 	if (ACCEL == NULL) {
 		printf("Error opening device!\n");
     exit(-1);
@@ -38,8 +38,8 @@ int main()
 
   // Init GPIOs for reading.
   *(ACCEL + DONE) = 0;
-  *(ACCEL + VECTOR_START) = 0;
-  *(ACCEL + VECTOR_LENGTH) = 0;
+  //*(ACCEL + VECTOR_START) =0 ;
+  *(ACCEL + VECTOR_LENGTH) = 3;
   *(ACCEL + SUM) = 0;
 
 
@@ -57,15 +57,16 @@ int main()
 
     /*Printing*/
     // Reduce the frequency of messages sent thru the UART --> once per 10 second.
-    ++ count;
+    
     if ((count % 200) == 0) {
       printf("Times: %lu ", count);
       printf("The value of the registers are : \n");
-      printf(" done : %lu \n",done);
+      printf(" done : %u \n",done);
       printf(" sum : %lu \n",sum);
       printf(" v_start : %lu \n",vector_start);
       printf(" v_length : %lu \n",vector_length);
     }
+    ++ count;
 
     usleep(50000);
   }
